@@ -51,18 +51,16 @@ Contacto* leer(string nombre_archivo, int posicion)
 //Devuelve un vector que contenga todos los nombres de los contactos previamente ingresados en el archivo con nombre dado
 vector<string> getNombres(string nombre_archivo)
 {
-    int t;
-    ifstream in(nombre_archivo.c_str());
-    char nombre[10];
-    in.seekg(0,ios::end);
-    t=in.tellg()/24;
-    in.seekg(0,ios::beg);
+//    ifstream in(nombre_archivo.c_str());
+//    char nombre[10];
+//    char correo[10];
+//    int numero;
+//
+//    in.seekg(24*posicion);
+//    in.read(nombre,10);
+
     vector<string>nombres;
-    for(int i=0;i<t;i++)
-    {
-    in.read(nombre,10);
-    nombres.push_back(nombre);
-    }
+
     return nombres;
 
 }
@@ -70,51 +68,60 @@ vector<string> getNombres(string nombre_archivo)
 //Devuelve true si valor_buscado (dado) se encuentra dentro de mi_cola (dada), de lo contrario devuelve false
 bool existe(queue<char> mi_cola, char valor_buscado)
 {
-//    for(queue<char>::iterator i=mi_cola.begin(); i!=mi_cola.end();i++)
-//    {
-//        if(*i==valor_buscado) return true;
-//    }
+    char buscador;
+    while (!mi_cola.empty())
+    {
+    if (mi_cola.front()==valor_buscado) return true;
+    mi_cola.pop();
+    }
     return false;
 }
 
 //Devuelve true si valor (dado) existe dentro de mi_set (dado)
 bool existe(set<int> mi_set,int valor)
 {
+    int buscador;
+    for (set<int>::iterator i=mi_set.begin();i!=mi_set.end();i++)
+    {
+    buscador=*i;
+    if(buscador==valor)
+    return true;
+    }
 
-//    int num;
-//    for(iterator::mi_set; iterator<mi_set.size(); iterator++)
-//    if(mi_set->num==valor) return true;
     return false;
 }
 
 //Devuelve una lista inversa de mi_lista (dada)
 list<double> invertir(list<double>mi_lista)
 {
-    list<double> invertida;
-    return invertida;
+    double number;
+    list<double> invert_list;
+    for (list<double>::iterator i=mi_lista.begin();i!=mi_lista.end();i++)
+    {
+    number=*i;
+    invert_list.push_front(number);
+    }
+    return invert_list;
 }
 
 //Devuelve la cantidad de nodos que contiene un arbol con raiz dada
 int contar(NodoBinario* raiz)
 {
     int number=0;
-//    if(raiz==NULL) return;
-//    cout<<raiz->valor<<endl;
-//    Imprimir(raiz->hijo_izq);
-//    Imprimir(raiz->hijo_der);
-    if(raiz!=NULL) number=number+1;
-    cout<<number<<endl;
-    //contar(raiz->hijo_izq);
-    //contar(raiz->hijo_der);
-//    if(raiz->hijo_der!=NULL)contador=contador+1;
-//    if(raiz->hijo_izq!=NULL)contador=contador+1;
-
+    if(raiz==NULL) return 0;
+        number=number+1;
+        contar(raiz->hijo_izq);
+        contar(raiz->hijo_der);
     return number;
 }
 
 //Cambia todos los valores de un arbol con raiz dada
 void cambiarValores(NodoBinario* raiz,int nuevo_valor)
 {
+    if(raiz==NULL) return;
+    if(raiz->valor!=nuevo_valor) raiz->valor=nuevo_valor;
+    cambiarValores(raiz->hijo_der,nuevo_valor);
+    cambiarValores(raiz->hijo_izq,nuevo_valor);
 }
 
 int main ()
